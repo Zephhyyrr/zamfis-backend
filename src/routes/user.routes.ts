@@ -10,7 +10,7 @@ const router = Router();
 router.get("/me", jwtCheckToken, meController);
 router.get("/", jwtCheckToken, isRole("superadmin"), getAlluserController);
 router.get("/:id", jwtCheckToken, isRole("superadmin"), idValidator, getUserByIdController);
-router.post("/", upload.none(), createUserValidator, createUserController);
+router.post("/", jwtCheckToken, isRole("superadmin"), upload.none(), createUserValidator, createUserController);
 router.put("/:id", jwtCheckToken, isRole("superadmin"), upload.none(), updateUserValidator, updateUserController);
 router.patch("/:id/activate", jwtCheckToken, isRole("superadmin"), idValidator, toggleUserActiveController);
 router.delete("/:id", jwtCheckToken, isRole("superadmin"), idValidator, deleteUserController);
