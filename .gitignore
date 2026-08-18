@@ -22,3 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
+import_uang_masuk_to_db_januari2026.py
+KAS_Januari_2026_Masuk.xlsx
+TOTAL_Uang_Keluar_Jan_Jun_2026.xlsx
+TOTAL_Uang_Masuk_Jan_Jun_2026.xlsx
+import_uang_masuk_to_db_2026.py
+import_uang_keluar_to_db_2026.py
