@@ -15,6 +15,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            # Memuat NVM agar npm dan pm2 dapat dieksekusi di sesi SSH ini
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            
             # Pindah ke folder backend
             cd /var/www/surauzamzam/backend
             
@@ -24,9 +28,9 @@ jobs:
             # Install package baru
             npm install
             
-            # Generate Prisma (Hapus baris ini jika tidak pakai Prisma)
+            # Generate Prisma
             npx prisma generate
             
-            # Restart PM2
-            pm2 restart backend-api || pm2 start index.js --name "backend-api"
+            # Restart PM2 dengan nama proses yang benar (backend)
+            pm2 restart backend || pm2 start index.js --name "backend"
             pm2 save
