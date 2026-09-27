@@ -15,25 +15,22 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            # Memuat NVM
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             
-            # Pindah ke folder
             cd /var/www/surauzamzam/backend
             
-            # Tarik update
+            set -a
+            source .env.production
+            set +a
+            
             git pull origin main
             
-            # Install dependensi (otomatis memicu prisma generate karena ada postinstall)
             npm install
             
-            # Build TypeScript ke JavaScript (menciptakan folder dist/)
             npm run build
             
-            # Terapkan struktur database terbaru ke PostgreSQL
             npx prisma migrate deploy
             
-            # Restart atau Start PM2 menggunakan file hasil build dengan argumen Node bawaanmu
             pm2 restart backend || pm2 start dist/server.js --name "backend" --node-args="--openssl-legacy-provider"
             pm2 save
