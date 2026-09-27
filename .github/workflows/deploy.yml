@@ -1,9 +1,8 @@
-name: Auto Deploy Backend Express
+name: Manual Deploy Backend Express
 
+# Menggunakan workflow_dispatch agar deploy hanya jalan saat ditekan manual
 on:
-  push:
-    branches:
-      - implementation
+  workflow_dispatch:
 
 jobs:
   deploy:
