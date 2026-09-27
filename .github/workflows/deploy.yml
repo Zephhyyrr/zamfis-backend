@@ -1,6 +1,5 @@
-name: Manual Deploy Backend Express
+name: Deploy Backend
 
-# Menggunakan workflow_dispatch agar deploy hanya jalan saat ditekan manual
 on:
   workflow_dispatch:
 
@@ -12,7 +11,7 @@ jobs:
       - name: Deploy ke VPS SurauZamzam
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.VPS_HOST }}
+          host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
