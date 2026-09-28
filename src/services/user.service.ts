@@ -284,7 +284,7 @@ export async function updatePhotoProfileService(params: { id: number; fotoProfil
 }
 
 const sendVerificationEmail = async (email: string, nama: string, token: string) => {
-    const backendBaseUrl = process.env.API_BACKEND || "http://localhost:3000";
+    const backendBaseUrl = process.env.API_BACKEND || "https://api.surauzamzam.my.id";
     const verifyUrl = new URL("/api/auth/verify-email", backendBaseUrl);
     verifyUrl.searchParams.set("token", token);
 
