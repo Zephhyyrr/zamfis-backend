@@ -6,11 +6,10 @@ import morgan from "morgan"
 import path from "path"
 import upload from "./middlewares/upload"
 import cookieParser from "cookie-parser"
-
 if (process.env.NODE_ENV === 'production') {
-    dotenv.config({ path: '.env' });
+    dotenv.config({ path: '.env.production' }); 
 } else {
-    dotenv.config({ path: '.env.production' });
+    dotenv.config({ path: '.env' }); 
 }
 const app = express()
 
