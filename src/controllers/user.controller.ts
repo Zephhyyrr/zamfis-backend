@@ -73,6 +73,15 @@ export async function updateUserController(req: Request, res: Response<ResponseA
         const { id } = req.params;
         const { email, nama, role, password } = req.body;
 
+        const targetUser = await getUserByIdService(Number(id));
+        if (targetUser?.email === 'pengurussurauzamzam@gmail.com' && req.user?.email !== 'pengurussurauzamzam@gmail.com') {
+            return res.status(403).json({
+                success: false,
+                message: "Akun utama (pengurussurauzamzam@gmail.com) hanya dapat diubah oleh pemilik akun tersebut."
+            });
+        }
+
+
         const updatedUser = await updateUserService(Number(id), email, nama, role, password);
         
         return res.status(200).json({
@@ -95,6 +104,15 @@ export async function toggleUserActiveController(req: Request, res: Response<Res
                 message: "Tidak bisa menonaktifkan atau mengaktifkan akun sendiri."
             });
         }
+
+        const targetUser = await getUserByIdService(Number(id));
+        if (targetUser?.email === 'pengurussurauzamzam@gmail.com') {
+            return res.status(403).json({
+                success: false,
+                message: "Status aktif akun utama (pengurussurauzamzam@gmail.com) tidak dapat dinonaktifkan."
+            });
+        }
+
 
         const { user, action } = await userActiveService(Number(id));
 
@@ -121,6 +139,14 @@ export async function deleteUserController(req: Request, res: Response<ResponseA
             return res.status(400).json({
                 success: false,
                 message: "Tidak bisa menghapus akun sendiri."
+            });
+        }
+
+        const targetUser = await getUserByIdService(Number(id));
+        if (targetUser?.email === 'pengurussurauzamzam@gmail.com') {
+            return res.status(403).json({
+                success: false,
+                message: "Akun utama (pengurussurauzamzam@gmail.com) tidak dapat dihapus."
             });
         }
         

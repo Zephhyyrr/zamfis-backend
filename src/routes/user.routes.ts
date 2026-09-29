@@ -8,12 +8,12 @@ import { meController } from "../controllers/auth.controller";
 const router = Router();
 
 router.get("/me", jwtCheckToken, meController);
-router.get("/", getAlluserController);
-router.get("/:id", idValidator, getUserByIdController);
-router.post("/", upload.none(), createUserValidator, createUserController);
+router.get("/", jwtCheckToken, isRole("superadmin"), getAlluserController);
+router.get("/:id", jwtCheckToken, isRole("superadmin"), idValidator, getUserByIdController);
+router.post("/", jwtCheckToken, isRole("superadmin"), upload.none(), createUserValidator, createUserController);
 router.put("/:id", jwtCheckToken, isRole("superadmin"), upload.none(), updateUserValidator, updateUserController);
 router.patch("/:id/activate", jwtCheckToken, isRole("superadmin"), idValidator, toggleUserActiveController);
-router.delete("/:id", idValidator, deleteUserController);
-router.patch("/:id/photo", jwtCheckToken, isRole("superadmin", "admin"), updatePhotoValidator, upload.single("fotoProfile"), validateUploadSizeByType, updatePhotoProfileController);
+router.delete("/:id", jwtCheckToken, isRole("superadmin"), idValidator, deleteUserController);
+router.patch("/:id/photo", jwtCheckToken, isRole("superadmin"), updatePhotoValidator, upload.single("fotoProfile"), validateUploadSizeByType, updatePhotoProfileController);
 
 export default router;
